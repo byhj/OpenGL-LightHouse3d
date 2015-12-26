@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <shader.h>
+#include <ogl/shader.h>
 
 Shader diffuseShader("diffuse Shading");
 GLuint program;
@@ -12,7 +12,7 @@ void init_shader()
 	diffuseShader.attach(GL_FRAGMENT_SHADER, "diffuse.frag");
 	diffuseShader.link();
 	diffuseShader.use();
-	program = diffuseShader.program;
+	program = diffuseShader.GetProgram();
 }
 void init()
 {

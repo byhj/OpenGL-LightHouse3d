@@ -2,7 +2,7 @@
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <shader.h>
+#include <ogl/shader.h>
 #include <iostream>
 
 using std::cerr; using std::endl;
@@ -33,13 +33,13 @@ void init_shader()
 	selectionShader.attach(GL_VERTEX_SHADER, "selection.vert");
 	selectionShader.attach(GL_FRAGMENT_SHADER, "selection.frag");
 	selectionShader.link();
-	selection_pro = selectionShader.program;
+	selection_pro = selectionShader.GetProgram();
 	code_loc = glGetUniformLocation(selection_pro, "code");
 	pickingShader.init();
 	pickingShader.attach(GL_VERTEX_SHADER, "picking.vert");
 	pickingShader.attach(GL_FRAGMENT_SHADER, "picking.frag");
 	pickingShader.link();
-	picking_pro = pickingShader.program;
+	picking_pro = pickingShader.GetProgram();
 	diffuse_loc = glGetUniformLocation(picking_pro, "diffuse");
 }
 void init()
@@ -61,19 +61,19 @@ void renderScene()
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, -2.0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform4fv(diffuse_loc, 1, &color[0][0]);
-	objRender();
+	//objRender();
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(4.0f, 0.0f, 0.0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform4fv(diffuse_loc, 1, &color[1][0]);
-	objRender();
+	//objRender();
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, 4.0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform4fv(diffuse_loc, 1, &color[2][0]);
-	objRender();
+	//objRender();
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(4.0f, 0.0f, .0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform4fv(diffuse_loc, 1, &color[3][0]);
-	objRender();
+//	objRender();
 
 	glutSwapBuffers();
 }
@@ -92,20 +92,20 @@ void renderSelection()
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, -2.0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform1i(code_loc, 1);
-	objRender();
+	//objRender();
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(4.0f, 0.0f, 0.0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform1i(code_loc, 2);
-	objRender();
+	//objRender();
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, 4.0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform1i(code_loc, 3);
-	objRender();
+	//objRender();
 	model_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(4.0f, 0.0f, .0f));
 	glUniformMatrix4fv(model_matrix_loc, 1, GL_FALSE, &model_matrix[0][0]);
 	glUniform1i(code_loc, 4);
-	objRender();
-}
+	//objRender();
+}//
 
 void reshape(int w, int h)
 {
@@ -203,7 +203,7 @@ int main(int argc, char **argv)
 	glutCreateWindow("Picking Demo");
 	GLenum status = glewInit();
 	if (status != GLEW_OK)
-		cerr << glewGetErrorString(status) << endl;
+		std::cerr << glewGetErrorString(status) << std::endl;
 	init();
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(reshape);

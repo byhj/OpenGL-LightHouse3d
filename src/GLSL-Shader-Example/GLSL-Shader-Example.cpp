@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <shader.h>
+#include <ogl/shader.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -22,7 +22,7 @@ void init_shader()
 	matrixShader.attach(GL_FRAGMENT_SHADER, "shader.frag");
 	matrixShader.link();
 	matrixShader.use();
-	program = matrixShader.program;
+	program = matrixShader.GetProgram();
 	mvp_matrix_loc = glGetUniformLocation(program, "mvp_matrix");
 	color_loc = glGetUniformLocation(program, "color");
 
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	glutCreateWindow("glsl-Shader-Example");
 	GLenum status = glewInit();
 	if (status != GLEW_OK)
-		cerr << glewGetErrorString(status) << endl;
+		std::cerr << glewGetErrorString(status) << std::endl;
 	init();
 	glutDisplayFunc(render);
 	glutReshapeFunc(reshape);

@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <shader.h>
+#include <ogl/shader.h>
 
 Shader toonShader("toon Shading");
 GLuint program;
@@ -12,7 +12,7 @@ void init_shader()
 	toonShader.attach(GL_FRAGMENT_SHADER, "toon.frag");
 	toonShader.link();
 	toonShader.use();
-	program = toonShader.program;
+	program = toonShader.GetProgram();
 }
 void init()
 {

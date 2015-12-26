@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <shader.h>
+#include <ogl/shader.h>
 
 Shader textureShader("toon Shading");
 GLuint program, vertex_loc, tc_loc;
@@ -45,7 +45,7 @@ GLuint loadTexture(const  char* theFileName)
 
 
 	ilDeleteImages(1, &imageID); // Because we have already copied image data into texture data we can release memory used by image.
-	cout << "Texture creation successful." << endl;
+	std::cout << "Texture creation successful." << std::endl;
 	return textureID; // Return the GLuint to the texture so you can use it!
 }
 static const float VertexData[] =
@@ -75,7 +75,7 @@ void init_shader()
 	textureShader.attach(GL_FRAGMENT_SHADER, "texture.frag");
 	textureShader.link();
 	textureShader.use();
-	program = textureShader.program;
+	program = textureShader.GetProgram();
 	tex_loc = glGetUniformLocation(program, "tex");
 	glUniform1i(tex_loc, 0);
 	vertex_loc = glGetAttribLocation(program, "position");

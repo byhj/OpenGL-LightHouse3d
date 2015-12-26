@@ -1,12 +1,15 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <shader.h>
+#include <ogl/shader.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 Shader uniformShader("glsl test");
 GLuint program, vertex_loc, mvp_matrix_loc;
 GLuint color_loc;
+
+using namespace  std;
 
 static const GLfloat VertexData[] = 
 {
@@ -22,7 +25,8 @@ void init_shader()
 	uniformShader.attach(GL_FRAGMENT_SHADER, "Attribute.frag");
 	uniformShader.link();
 	uniformShader.use();
-	program = uniformShader.program;
+	program = uniformShader.GetProgram();
+
 	mvp_matrix_loc = glGetUniformLocation(program, "mvp_matrix");
 	color_loc = glGetUniformLocation(program, "color");
 	vertex_loc = glGetAttribLocation(program, "position");
@@ -57,7 +61,7 @@ int main(int argc, char **argv)
 	glutCreateWindow("glsl-Attribute");
 	GLenum status = glewInit();
 	if (status != GLEW_OK)
-		cerr << glewGetErrorString(status) << endl;
+		std::cerr << glewGetErrorString(status) << std::endl;
 	init();
 	glutDisplayFunc(render);
 	glutMainLoop();
